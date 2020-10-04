@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <main id="main">
+        <div class="card-container">
+            {% for movie in movies %}
+                <div class="card">
+                    <a href="{{ movie['url'] }}">
+                    <h3>{{ movie['title'] }}</h3>
+                    <p>{{ movie['year'] }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}
