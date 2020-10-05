@@ -1,7 +1,7 @@
 from cs235flix.adapters.repository import AbstractRepository
 from cs235flix.domain.model import Actor, Movie
 from cs235flix.cache import cache
-
+import cs235flix.utilities.utilities as utils
 
 class PersonException(Exception):
     pass
@@ -13,7 +13,7 @@ def get_movies_by_director(director: str, repo: AbstractRepository):
     if director is None:
         raise PersonException
     movies = repo.get_movies_by_director(director)
-    return [movie_to_dict(movie) for movie in sorted(movies)]
+    return [utils.movie_to_dict(movie) for movie in sorted(movies, key=lambda x: x.rank)]
 
 
 @cache.memoize(timeout=30)
@@ -30,13 +30,7 @@ def get_movies_by_actor(actor, repo: AbstractRepository):
     if actor is None:
         raise PersonException('Actor does not exist')
     movies = repo.get_movies_by_actor(actor)
-    return [movie_to_dict(movie) for movie in sorted(movies)], get_collegues(actor)
+    return [utils.movie_to_dict(movie) for movie in sorted(movies, key=lambda x: x.rank)], get_collegues(actor)
 
 
-def movie_to_dict(movie: Movie):
-    movie_dict = dict(rank=movie.rank, title=movie.title, year=movie.release_year, runtime=movie.runtime_minutes,
-                      actors=[actor.actor_full_name for actor in movie.actors],
-                      director=movie.director.director_full_name, genres=[genre.genre_name for genre in movie.genres],
-                      description=movie.description, rating=movie.rating, votes=movie.votes, revenue=movie.revenue,
-                      meta_score=movie.metascore)
-    return movie_dict
+

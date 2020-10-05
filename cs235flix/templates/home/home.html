@@ -14,23 +14,27 @@
                         <div class="card">
                             <h3>{{ movie['title'] }}</h3>
                             <p>{{ movie['year'] }}</p>
+                            <a href="{{ url_for('watchlist_bp.remove_from_watchlist', title=movie['title'], year=movie['year']) }}">
+                                <div class="btn-general">
+                                    Remove
+                                </div>
+                            </a>
                         </div>
                         </a>
                     {% endfor %}
                 {% endif %}
             </div>
+            {% if watchlist|length > 8 %}
+                <a href="{{ url_for('watchlist_bp.watchlist') }}">
+                    <div class="btn-general">
+                        See More
+                    </div>
+                </a>
+            {% endif %}
         {% endif %}
         <h1>Top 100 Movies by Rank</h1>
-        <div class="card-container">
-            {% for movie in movies %}
-                <div class="card">
-                    <a href="{{ movie['url'] }}">
-                        <p>{{ movie['rank'] }}</p>
-                    <h3>{{ movie['title'] }}</h3>
-                    <p>{{ movie['year'] }}</p>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+        {% include 'card.html' %}
+        {% block movie_card %}
+        {% endblock %}
     </main>
 {% endblock %}

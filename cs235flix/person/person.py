@@ -22,7 +22,8 @@ def director():
                 'person/person.html',
                 title="Director",
                 fullname=fullname,
-                movies=movie_data,
+                watchlist=utils.get_user_watchlist(),
+                movies=utils.get_added_movies(movie_data, utils.get_user_watchlist()),
                 search_form = search_form
             )
         except ValueError:
@@ -45,7 +46,8 @@ def actor():
                 'person/person.html',
                 title="Actor",
                 fullname=fullname,
-                movies=movie_data,
+                watchlist=utils.get_user_watchlist(),
+                movies=utils.get_added_movies(movie_data, utils.get_user_watchlist()),
                 collegues=collegues,
                 search_form=search_form,
             )

@@ -226,6 +226,16 @@ class MemoryRepository(AbstractRepository):
         else:
             return None
 
+    def add_movie_to_watchlist(self, entity: User or UserGroup, movie: Movie):
+        for user in self.dataset_of_users:
+            if user == entity:
+                user.watchlist.add_movie(movie)
+
+    def remove_movie_from_watchlist(self, entity: User or UserGroup, movie:Movie):
+        for user in self.dataset_of_users:
+            if user == entity:
+                user.watchlist.remove_movie(movie)
+
 
 def read_csv(filename: str):
     with open(filename, mode='r', encoding='utf-8-sig') as csvfile:

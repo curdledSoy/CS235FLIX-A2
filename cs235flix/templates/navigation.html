@@ -2,17 +2,19 @@
     <div id="nav-contents">
         <img src="{{ url_for('static', filename='img/logo.png' ) }}" style="width: 100%">
         {% if 'username' in session %}
-        <h2 id="nav-header">
-            {{ session['username'] }}
-        </h2>
+            <h2 id="nav-header">
+                {{ session['username'] }}
+            </h2>
+            <a class="btn-nav" href="{{ url_for('watchlist_bp.watchlist') }}">My Watchlist</a>
         {% endif %}
+
         <div class="formwrapper">
             <form action="{{ url_for('search_bp.search') }}" method="post">
             {{ search_form.csrf_token }}
             <div class="form-field">
                 {{ search_form.fuzzy }}
             </div>
-            {{ search_form.submit }}
+            {{ search_form.submit(class_="btn-nav") }}
         </form>
         </div>
         <a class="btn-nav" href="{{ url_for('home_bp.home') }}">Home</a>

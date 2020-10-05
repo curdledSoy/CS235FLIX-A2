@@ -1,21 +1,15 @@
 {% extends 'search/search.html' %}
 
 {% block results %}
-<div class="card-container">
-            {% if results|length == 0 %}
-                    <div class="card">
-                    <p>No Matching Movies 😭</p>
-                    </div>
-            {% else %}
-                {% for movie in results %}
-                    <div class="card">
-                        <a href="{{ movie['url'] }}">
-                            <p>{{ movie['rank'] }}</p>
-                        <h3>{{ movie['title'] }}</h3>
-                        <p>{{ movie['year'] }}</p>
-                        </a>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+    {% if movies|length == 0 %}
+        <div class="card-container">
+                <div class="card">
+                <p>No Matching Movies 😭</p>
+                </div>
+            </div>
+    {% else %}
+        {% include 'card.html' %}
+        {% block movie_card %}
+        {% endblock %}
+    {% endif %}
 {% endblock %}

@@ -117,11 +117,11 @@ def movies_by_first_letter():
         movies = services.get_movies_by_first_letter(character, repo.repo_instance)
         for movie in movies:
             movie['url'] = url_for('movie_bp.movie', title=movie['title'], year=movie['year'])
-            movie['rank'] = utils.ordinal(movie['rank'])
         return render_template(
             'browse/browse-movies.html',
             title=f"Movies Starting With: {character}",
-            movies=movies,
+            watchlist=utils.get_user_watchlist(),
+            movies=utils.get_added_movies(movies, utils.get_user_watchlist()),
             search_form=search_form
         )
     else:
@@ -144,10 +144,10 @@ def movies():
     movies = services.get_movies(repo.repo_instance)
     for movie in movies:
         movie['url'] = url_for('movie_bp.movie', title=movie['title'], year=movie['year'])
-        movie['rank'] = utils.ordinal(movie['rank'])
     return render_template(
         'browse/browse-movies.html',
         title='All Movies By Rank',
-        movies=movies,
+        watchlist=utils.get_user_watchlist(),
+        movies=utils.get_added_movies(movies, utils.get_user_watchlist()),
         search_form=search_form
     )

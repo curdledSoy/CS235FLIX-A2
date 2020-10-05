@@ -287,7 +287,7 @@ class Movie:
 class WatchList:
     def __init__(self):
         self.__watchlist = []
-        self.__movie_index = 0
+        self.__movie_index = -1
 
 
     def add_movie(self, movie: Movie):
@@ -317,19 +317,19 @@ class WatchList:
             return None
 
     def __iter__(self):
-        return self
+        return iter(self.__watchlist)
 
     def __next__(self):
-        if self.__movie_index < len(self.__watchlist):
-            next_movie = self.__watchlist[self.__movie_index]
-            self.__movie_index += 1
-            return next_movie
-        else:
+        self.__movie_index += 1
+        if self.__movie_index >= len(self.__watchlist):
+            self.__movie_index -= 1
             raise StopIteration
+        else:
+            return self.__watchlist[self.__movie_index]
 
 
 class User:
-    def __init__(self, user_name: str, password: str):
+    def __init__(self, user_name: str, password: str, isAdmin=False):
         if isinstance(user_name, str) and len(user_name.strip()) > 0:
             self.__user_name = user_name.strip()
             self.__user_name = user_name.lower()
@@ -343,6 +343,8 @@ class User:
         self.__reviews = []
         self.__time_spent_watching_movies_minutes = 0
         self.__watchlist = WatchList()
+        self.__isAdmin = isAdmin
+        self.__friends = []
 
     def __repr__(self):
         return f"<User {self.__user_name}>"
@@ -394,6 +396,25 @@ class User:
     @property
     def watchlist(self) -> WatchList:
         return self.__watchlist
+
+    @property
+    def isAdmin(self) -> bool:
+        return self.__isAdmin
+
+    @property
+    def friends(self):
+        return self.__friends
+
+    def add_friend(self, user):
+        self.__friends.append(user)
+        user.friends.append(user)
+
+    def remove_friend(self, user):
+        self.__friends.remove(user)
+        user.friends.remove(user)
+
+    def isFriends(self, user):
+        return user in self.__friends
 
 class Review:
     def __init__(self, movie: Movie, author: User, review_text: str, rating: int):

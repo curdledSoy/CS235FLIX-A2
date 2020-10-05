@@ -19,7 +19,8 @@ def genre():
             return render_template(
                 'genre/genre.html',
                 title=genre,
-                movies=movie_data,
+                watchlist=utils.get_user_watchlist(),
+                movies=utils.get_added_movies(movie_data, utils.get_user_watchlist()),
                 search_form=search_form,
             )
         except services.UnknownGenreException:

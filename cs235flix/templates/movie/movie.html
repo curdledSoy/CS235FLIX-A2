@@ -3,6 +3,22 @@
     <main id="main">
         <div id="movie-details">
             <h1> {{ movie['title'] }}</h1>
+            {% if 'username' in session %}
+                <div style="align-self: center">
+                    <a class="btn-general" href="{{ url_for('movie_bp.watch', title=movie['title'], year=movie['year']) }}">
+                        Watch
+                    </a>
+                    {% if movie['added'] %}
+                            <a class="btn-general" href="{{ url_for('watchlist_bp.remove_from_watchlist', title=movie['title'], year=movie['year']) }}">
+                                Remove from Watchlist
+                            </a>
+                        {% else %}
+                            <a class="btn-general" href="{{ url_for('watchlist_bp.add_to_watchlist', title=movie['title'], year=movie['year']) }}">
+                                Add to Watchlist
+                            </a>
+                        {% endif %}
+                </div>
+            {% endif %}
             <div id="movie-numerical-data">
                 <div>
                     <h2>Year</h2>
@@ -60,12 +76,12 @@
                     Add Review
             </button>
             {% endif %}
-            {% if movie['reviews']|length ==0 %}
+            {% if movie['reviews']|length == 0 %}
                 <div class="card-container">
                     <div class="card">
                     <p>No Reviews 😭</p>
                     </div>
-            </div>
+                </div>
             {% else %}
             <div class="card-container">
                 {% for review in movie['reviews'] %}

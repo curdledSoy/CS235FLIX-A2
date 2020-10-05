@@ -1,7 +1,7 @@
 from cs235flix.adapters.repository import AbstractRepository, RepositoryException
 from cs235flix.domain.model import User, Director, Actor, Movie
 from cs235flix.cache import cache
-
+import cs235flix.utilities.utilities as utils
 
 class BrowseException(Exception):
     pass
@@ -11,7 +11,7 @@ def get_genres(repo: AbstractRepository):
     genres = []
     for genre in sorted(repo.dataset_of_genres):
         movies = repo.get_movies_by_genre(genre)
-        genres.append(dict(name=genre.genre_name, movies= [movie_to_dict(movie) for movie in movies]))
+        genres.append(dict(name=genre.genre_name, movies= [utils.movie_to_dict(movie) for movie in movies]))
     return genres
 
 
@@ -20,7 +20,7 @@ def get_actors(repo: AbstractRepository):
     actors = []
     for actor in sorted(repo.dataset_of_actors):
         movies = repo.get_movies_by_actor(actor)
-        actors.append(dict(name=actor.actor_full_name, movies=[movie_to_dict(movie) for movie in movies]))
+        actors.append(dict(name=actor.actor_full_name, movies=[utils.movie_to_dict(movie) for movie in movies]))
     return actors
 
 
@@ -31,7 +31,7 @@ def get_actors_by_first_letter(character: str, repo: AbstractRepository):
         if actor.actor_full_name[0] == character.upper():
             movies = repo.get_movies_by_actor(actor)
             matching_actors.append(
-                dict(name=actor.actor_full_name, movies=[movie_to_dict(movie) for movie in movies]))
+                dict(name=actor.actor_full_name, movies=[utils.movie_to_dict(movie) for movie in movies]))
     return matching_actors
 
 
@@ -53,7 +53,7 @@ def get_directors_by_first_letter(character: str, repo: AbstractRepository):
         if director.director_full_name[0] == character.upper():
             movies = repo.get_movies_by_director(director)
             matching_directors.append(
-                dict(name=director.director_full_name, movies=[movie_to_dict(movie) for movie in movies]))
+                dict(name=director.director_full_name, movies=[utils.movie_to_dict(movie) for movie in movies]))
     return matching_directors
 
 
@@ -90,7 +90,7 @@ def get_movies_by_first_letter(character: str, repo: AbstractRepository):
     matching_movies = []
     for movie in sorted(repo.dataset_of_movies):
         if movie.title[0] == character.upper():
-            matching_movies.append(movie_to_dict(movie))
+            matching_movies.append(utils.movie_to_dict(movie))
     return matching_movies
 
 @cache.memoize(timeout=30)
@@ -104,12 +104,4 @@ def get_all_movie_first_letter(repo: AbstractRepository):
     return first_letters
 
 def get_movies(repo:AbstractRepository):
-    return [movie_to_dict(movie) for movie in sorted(repo.dataset_of_movies, key=lambda x: x.rank)]
-
-def movie_to_dict(movie: Movie):
-    movie_dict = dict(rank=movie.rank, title=movie.title, year=movie.release_year, runtime=movie.runtime_minutes,
-                      actors=[actor.actor_full_name for actor in movie.actors],
-                      director=movie.director.director_full_name, genres=[genre.genre_name for genre in movie.genres],
-                      description=movie.description, rating=movie.rating, votes=movie.votes, revenue=movie.revenue,
-                      meta_score=movie.metascore)
-    return movie_dict
+    return [utils.movie_to_dict(movie) for movie in sorted(repo.dataset_of_movies, key=lambda x: x.rank)]

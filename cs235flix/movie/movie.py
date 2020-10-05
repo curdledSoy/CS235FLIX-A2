@@ -22,12 +22,28 @@ def movie():
         return render_template(
             'movie/movie.html',
             title="Movie",
-            movie=movie_data,
+            movie=utils.get_added_movies([movie_data], utils.get_user_watchlist())[0],
             search_form=search_form,
         )
     except services.UnknownMovieException:
         return redirect(url_for('home_bp.home'))
     return redirect(url_for('home_bp.home'))
+
+
+
+@movie_blueprint.route('/watch/', methods=['GET'])
+@login_required
+def watch():
+    title = request.args.get('title')
+    year = request.args.get('year')
+    user = session['username']
+    try:
+        movie_data = services.watch_movie(user, title, year, repo.repo_instance)
+        return redirect(url_for('movie_bp.movie', title=title, year=year))
+    except services.UnknownMovieException:
+        return redirect(request.referrer)
+    return redirect(request.referrer)
+
 
 @movie_blueprint.route('/review', methods=['GET', 'POST'])
 @login_required

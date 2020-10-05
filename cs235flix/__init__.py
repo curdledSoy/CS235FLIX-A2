@@ -46,4 +46,7 @@ def create_app(test_config=None):
 
         from .search import search
         app.register_blueprint(search.search_bp)
+
+        from .profile import profile
+        app.register_blueprint(profile.profile_blueprint)
     return app

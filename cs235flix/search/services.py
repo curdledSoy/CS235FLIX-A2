@@ -1,6 +1,7 @@
 from cs235flix.adapters.repository import AbstractRepository
 from cs235flix.domain.model import Movie, Actor, Director, Genre
 from fuzzywuzzy import process
+import cs235flix.utilities.utilities as utils
 
 def get_actors(repo: AbstractRepository):
     actors = sorted(repo.dataset_of_actors)
@@ -19,7 +20,7 @@ def get_genres(repo: AbstractRepository):
 
 
 def get_search_results(actors, genres, director, fuzzy, repo: AbstractRepository):
-    results = [movie_to_dict(movie) for movie in repo.dataset_of_movies]
+    results = [utils.movie_to_dict(movie) for movie in repo.dataset_of_movies]
     if actors:
         actor_movies = get_movies_for_actors(actors, repo)
         results = [movie for movie in results if movie in actor_movies]
@@ -39,7 +40,7 @@ def get_fuzzy_search_movies(fuzzy, repo):
     movies = list(repo.dataset_of_movies)
     movie_title_dict = dict(enumerate([movie.title for movie in movies]))
     best_matches = process.extractBests(fuzzy, movie_title_dict, score_cutoff=50)
-    return [movie_to_dict(movie) for movie in [movies[z] for (x,y,z) in best_matches]]
+    return [utils.movie_to_dict(movie) for movie in [movies[z] for (x,y,z) in best_matches]]
 
 
 def get_movies(actors, genres, director, repo: AbstractRepository):
@@ -65,13 +66,13 @@ def get_movies(actors, genres, director, repo: AbstractRepository):
             else:
                 if movie in matches:
                     matches.remove(movie)
-    return [movie_to_dict(movie) for movie in matches]
+    return [utils.movie_to_dict(movie) for movie in matches]
 
 
 def get_movies_for_director(director, repo):
     if director is None:
         return []
-    return [movie_to_dict(movie) for movie in repo.get_movies_by_director(Director(director))]
+    return [utils.movie_to_dict(movie) for movie in repo.get_movies_by_director(Director(director))]
 
 
 def get_movies_for_genres(genres, repo):
@@ -88,7 +89,7 @@ def get_movies_for_genres(genres, repo):
                 to_remove.append(movie)
     for item in to_remove:
         movies.remove(item)
-    return [movie_to_dict(movie) for movie in movies]
+    return [utils.movie_to_dict(movie) for movie in movies]
 
 
 def get_movies_for_actors(actors, repo):
@@ -107,16 +108,5 @@ def get_movies_for_actors(actors, repo):
     for item in to_remove:
         if item in movies:
             movies.remove(item)
-    return [movie_to_dict(movie) for movie in movies]
+    return [utils.movie_to_dict(movie) for movie in movies]
 
-
-def movie_to_dict(movie: Movie):
-    movie_dict = {
-        'rank': movie.rank,
-        'title': movie.title,
-        'year': movie.release_year,
-        'actors': [actor.actor_full_name for actor in movie.actors],
-        'genres': [genre.genre_name for genre in movie.genres],
-        'director': movie.director.director_full_name,
-    }
-    return movie_dict
