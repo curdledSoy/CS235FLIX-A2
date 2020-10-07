@@ -12,13 +12,14 @@
             {% for movie in watchlist %}
                 <a href="{{ movie['url'] }}">
                     <div class="card">
+
                         <h3>{{ movie['title'] }}</h3>
                         <p>{{ movie['year'] }}</p>
-                        <a href="{{ url_for('watchlist_bp.remove_from_watchlist', title=movie['title'], year=movie['year']) }}">
-                            <div class="btn-general">
-                                Remove
-                            </div>
-                        </a>
+                        <div>
+                            <a class="btn-general" href="{{ url_for('watchlist_bp.remove_from_watchlist', title=movie['title'], year=movie['year']) }}">
+                                    Remove
+                            </a>
+                        </div>
                     </div>
                 </a>
             {% endfor %}

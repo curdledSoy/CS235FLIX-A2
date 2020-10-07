@@ -9,28 +9,28 @@
                     <p>Watchlist is empty 😭</p>
                     </div>
                 {% else %}
-                    {% for movie in watchlist[:8] %}
+                    {% for movie in watchlist[:7] %}
                         <a href="{{ movie['url'] }}">
-                        <div class="card">
-                            <h3>{{ movie['title'] }}</h3>
-                            <p>{{ movie['year'] }}</p>
-                            <a href="{{ url_for('watchlist_bp.remove_from_watchlist', title=movie['title'], year=movie['year']) }}">
-                                <div class="btn-general">
-                                    Remove
+                            <div class="card">
+                                <h3>{{ movie['title'] }}</h3>
+                                <p>{{ movie['year'] }}</p>
+                                <div>
+                                    <a class="btn-general" href="{{ url_for('watchlist_bp.remove_from_watchlist', title=movie['title'], year=movie['year']) }}">
+                                            Remove
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
+                            </div>
                         </a>
                     {% endfor %}
+
                 {% endif %}
             </div>
-            {% if watchlist|length > 8 %}
-                <a href="{{ url_for('watchlist_bp.watchlist') }}">
-                    <div class="btn-general">
-                        See More
-                    </div>
+             {% if watchlist|length >= 8 %}
+                <a class="btn-general" href="{{ url_for('watchlist_bp.watchlist') }}">
+                    See More
                 </a>
             {% endif %}
+
         {% endif %}
         <h1>Top 100 Movies by Rank</h1>
         {% include 'card.html' %}
