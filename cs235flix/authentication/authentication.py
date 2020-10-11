@@ -1,22 +1,22 @@
-from flask import Blueprint, render_template, redirect, url_for, request, session
+from functools import wraps
 
+from flask import Blueprint, render_template, redirect, url_for, session
 from flask_wtf import FlaskForm
+from password_validator import PasswordValidator
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
 
-from password_validator import PasswordValidator
-
-from functools import wraps
-
-import cs235flix.utilities.utilities as utils
-import cs235flix.authentication.services as services
 import cs235flix.adapters.repository as repo
+import cs235flix.authentication.services as services
+import cs235flix.utilities.utilities as utils
 
 authentication_blueprint = Blueprint('authentication_bp', __name__, url_prefix='/auth')
 
 
 @authentication_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    """
     auth_form = RegistrationForm()
     search_form = utils.MovieSearchForm()
     username_unique = None
@@ -39,11 +39,12 @@ def register():
 
 @authentication_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    """
     auth_form = LoginForm()
     search_form = utils.MovieSearchForm()
     username_not_recognised = None
     password_doesnt_match = None
-
     if auth_form.validate_on_submit():
         try:
             user = services.get_user(auth_form.username.data, repo.repo_instance)
@@ -69,13 +70,19 @@ def login():
 
 @authentication_blueprint.route('/logout')
 def logout():
+    """
+    """
     session.clear()
     return redirect(url_for('home_bp.home'))
 
 
 def login_required(view):
+    """
+    """
     @wraps(view)
     def wrapped_view(**kwargs):
+        """
+        """
         if 'username' not in session:
             return redirect(url_for('authentication_bp.login'))
         return view(**kwargs)
@@ -84,10 +91,12 @@ def login_required(view):
 
 
 class PasswordValid:
+    """
+    """
     def __init__(self, message=None):
         if not message:
-            message = u'Your password must contain an uppercase letter, a lowercase letter, a digit and be at least 6 ' \
-                      u'characters in length '
+            message = u"Your password must contain an uppercase letter, a lowercase letter, a digit and be at least 6 "\
+                      u"characters in length "
         self.message = message
 
     def __call__(self, form, field):
@@ -104,7 +113,7 @@ class PasswordValid:
 class RegistrationForm(FlaskForm):
     username = StringField('Username', [DataRequired(message="Your username is required"),
                                         Length(min=3, message="Username too short!")],
-                                        render_kw={"placeholder": "Username"}
+                           render_kw={"placeholder": "Username"}
                            )
     password = PasswordField('Password', [DataRequired(message="Your password is required"),
                                           PasswordValid()],
@@ -115,6 +124,6 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', [DataRequired()] ,render_kw={"placeholder": "Username"})
+    username = StringField('Username', [DataRequired()], render_kw={"placeholder": "Username"})
     password = PasswordField('Password', [DataRequired()], render_kw={"placeholder": "Password"})
     submit = SubmitField('Login')

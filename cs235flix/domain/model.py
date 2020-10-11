@@ -1,9 +1,10 @@
 import random
 from datetime import datetime
-from typing import List
 
 
 class Actor:
+    """
+    """
     def __init__(self, full_name):
         if full_name == "" or type(full_name) is not str:
             self.__actor_full_name = None
@@ -13,10 +14,14 @@ class Actor:
 
     @property
     def actor_full_name(self):
+        """
+        """
         return self.__actor_full_name
 
     @property
     def has_worked_with(self):
+        """
+        """
         return self.__has_worked_with
 
     def __repr__(self) -> str:
@@ -32,16 +37,21 @@ class Actor:
         return hash(self.__actor_full_name)
 
     def add_actor_colleague(self, colleague):
+        """
+        """
         if colleague not in self.__has_worked_with:
             self.__has_worked_with.append(colleague)
             colleague.add_actor_colleague(self)
 
     def check_if_this_actor_worked_with(self, colleague):
+        """
+        """
         return colleague in self.__has_worked_with
 
 
 class Director:
-
+    """
+    """
     def __init__(self, director_full_name: str):
         if director_full_name == "" or type(director_full_name) is not str:
             self.__director_full_name = None
@@ -50,6 +60,8 @@ class Director:
 
     @property
     def director_full_name(self) -> str:
+        """
+        """
         return self.__director_full_name
 
     def __repr__(self):
@@ -72,14 +84,18 @@ class Director:
 
 
 class Genre:
-    def __init__(self, genreName):
-        if genreName == "" or type(genreName) is not str:
+    """
+    """
+    def __init__(self, genre_name):
+        if genre_name == "" or type(genre_name) is not str:
             self.__genre_name = None
         else:
-            self.__genre_name = genreName
+            self.__genre_name = genre_name
 
     @property
     def genre_name(self) -> str:
+        """
+        """
         return self.__genre_name
 
     def __repr__(self):
@@ -102,6 +118,8 @@ class Genre:
 
 
 class Movie:
+    """
+    """
     def __init__(self, title: str, release_year: int):
         if isinstance(title, str):
             title = title.strip()
@@ -127,6 +145,8 @@ class Movie:
 
     @property
     def title(self) -> str:
+        """
+        """
         return self.__title
 
     @title.setter
@@ -138,10 +158,14 @@ class Movie:
 
     @property
     def release_year(self) -> int:
+        """
+        """
         return self.__release_year
 
     @property
     def description(self) -> str:
+        """
+        """
         return self.__description
 
     @description.setter
@@ -151,6 +175,8 @@ class Movie:
 
     @property
     def director(self) -> Director:
+        """
+        """
         return self.__director
 
     @director.setter
@@ -160,6 +186,8 @@ class Movie:
 
     @property
     def actors(self) -> list:
+        """
+        """
         if len(self.__actors) > 1:
             for i in range(len(self.__actors)):
                 actor1 = self.__actors[i]
@@ -175,6 +203,8 @@ class Movie:
 
     @property
     def genres(self) -> list:
+        """
+        """
         self.__genres.sort()
         return self.__genres
 
@@ -185,6 +215,8 @@ class Movie:
 
     @property
     def runtime_minutes(self) -> int:
+        """
+        """
         return self.__runtime_minutes
 
     @runtime_minutes.setter
@@ -196,6 +228,8 @@ class Movie:
 
     @property
     def rank(self) -> int:
+        """
+        """
         return self.__rank
 
     @rank.setter
@@ -205,6 +239,8 @@ class Movie:
 
     @property
     def rating(self) -> int:
+        """
+        """
         return self.__rating
 
     @rating.setter
@@ -214,6 +250,8 @@ class Movie:
 
     @property
     def votes(self):
+        """
+        """
         return self.__votes
 
     @votes.setter
@@ -223,6 +261,8 @@ class Movie:
 
     @property
     def revenue(self):
+        """
+        """
         return self.__revenue_in_millions
 
     @revenue.setter
@@ -233,6 +273,8 @@ class Movie:
 
     @property
     def metascore(self):
+        """
+        """
         return self.__metascore
 
     @metascore.setter
@@ -242,6 +284,8 @@ class Movie:
 
     @property
     def reviews(self):
+        """
+        """
         return self.__reviews
 
     def __repr__(self):
@@ -257,60 +301,84 @@ class Movie:
         return hash(self.__title + " " + str(self.__release_year))
 
     def add_actor(self, actor):
+        """
+        """
         if isinstance(actor, Actor):
             if actor not in self.__actors:
                 self.__actors.append(actor)
 
     def remove_actor(self, actor):
+        """
+        """
         if actor in self.__actors:
             self.__actors.remove(actor)
 
     def add_genre(self, genre):
+        """
+        """
         if isinstance(genre, Genre):
             if genre not in self.__genres:
                 self.__genres.append(genre)
 
     def remove_genre(self, genre):
+        """
+        """
         if genre in self.__genres:
             self.__genres.remove(genre)
 
     def add_review(self, review):
+        """
+        """
         if review not in self.__reviews:
             self.__reviews.append(review)
 
     def remove_review(self, review):
+        """
+        """
         if review in self.__reviews:
             self.__reviews.remove(review)
 
 
-
 class WatchList:
+    """
+    """
     def __init__(self):
         self.__watchlist = []
         self.__movie_index = -1
 
-
     def add_movie(self, movie: Movie):
+        """
+        """
         if isinstance(movie, Movie) and movie not in self.__watchlist:
             self.__watchlist.append(movie)
 
     def remove_movie(self, movie: Movie):
+        """
+        """
         if isinstance(movie, Movie) and movie in self.__watchlist:
             self.__watchlist.remove(movie)
 
     def select_movie_to_watch(self, index: int):
+        """
+        """
         if isinstance(index, int) and index in range(len(self.__watchlist)):
             return self.__watchlist[index]
         else:
             return None
 
     def shuffle_select_movie_to_watch(self):
+        """
+        """
         return self.__watchlist[random.randint(0, len(self.__watchlist))]
 
     def size(self):
+        """
+        """
         return len(self.__watchlist)
 
     def first_movie_in_watchlist(self):
+        """
+        """
         if self.size() != 0:
             return self.__watchlist[0]
         else:
@@ -329,7 +397,11 @@ class WatchList:
 
 
 class User:
-    def __init__(self, user_name: str, password: str, isAdmin=False):
+    """
+    """
+
+    # noinspection PyPep8Naming
+    def __init__(self, user_name: str, password: str, is_admin=False):
         if isinstance(user_name, str) and len(user_name.strip()) > 0:
             self.__user_name = user_name.strip()
             self.__user_name = user_name.lower()
@@ -343,7 +415,7 @@ class User:
         self.__reviews = []
         self.__time_spent_watching_movies_minutes = 0
         self.__watchlist = WatchList()
-        self.__isAdmin = isAdmin
+        self.__is_admin = is_admin
         self.__friends = []
 
     def __repr__(self):
@@ -363,60 +435,89 @@ class User:
         return hash((self.__user_name, self.__password))
 
     def watch_movie(self, movie: Movie):
+        """
+        """
         if isinstance(movie, Movie):
             if movie not in self.__watched_movies:
                 self.__watched_movies.append(movie)
             self.__time_spent_watching_movies_minutes += movie.runtime_minutes
 
     def add_review(self, review: object):
+        """
+        """
         if isinstance(review, Review):
             if review not in self.__reviews:
                 self.__reviews.append(review)
 
     @property
     def user_name(self) -> str:
+        """
+        """
         return self.__user_name
 
     @property
     def password(self) -> str:
+        """
+        """
         return self.__password
 
     @property
     def watched_movies(self) -> list:
+        """
+        """
         return self.__watched_movies
 
     @property
     def reviews(self) -> list:
+        """
+        """
         return self.__reviews
 
     @property
     def time_spent_watching_movies_minutes(self) -> int:
+        """
+        """
         return int(self.__time_spent_watching_movies_minutes)
 
     @property
     def watchlist(self) -> WatchList:
+        """
+        """
         return self.__watchlist
 
     @property
-    def isAdmin(self) -> bool:
-        return self.__isAdmin
+    def is_admin(self) -> bool:
+        """
+        """
+        return self.__is_admin
 
     @property
     def friends(self):
+        """
+        """
         return self.__friends
 
     def add_friend(self, user):
+        """
+        """
         self.__friends.append(user)
         user.friends.append(user)
 
     def remove_friend(self, user):
+        """
+        """
         self.__friends.remove(user)
         user.friends.remove(user)
 
-    def isFriends(self, user):
+    def is_friends(self, user):
+        """
+        """
         return user in self.__friends
 
+
 class Review:
+    """
+    """
     def __init__(self, movie: Movie, author: User, review_text: str, rating: int):
         if isinstance(movie, Movie):
             self.__movie = movie
@@ -449,25 +550,38 @@ class Review:
 
     @property
     def movie(self):
+        """
+        """
         return self.__movie
 
     @property
     def review_text(self):
+        """
+        """
         return self.__review_text
 
     @property
     def rating(self):
+        """
+        """
         return self.__rating
 
     @property
     def timestamp(self):
+        """
+        """
         return self.__timestamp
 
     @property
     def author(self):
+        """
+        """
         return self.__author
 
+
 class UserGroup:
+    """
+    """
     def __init__(self, owner: User, name=None):
         if name is None or len(name.strip()) == 0 or not isinstance(name, str):
             self.__group_name = "New Group"
@@ -489,6 +603,8 @@ class UserGroup:
 
     @property
     def group_name(self) -> str:
+        """
+        """
         return self.__group_name
 
     @group_name.setter
@@ -499,46 +615,69 @@ class UserGroup:
 
     @property
     def owner(self) -> User:
+        """
+        """
         return self.__owner
 
     @property
     def watchlist(self):
+        """
+        """
         return self.__watchlist
 
     @property
     def members(self):
+        """
+        """
         return self.__members
 
     def watch_movie(self, movie):
+        """
+        """
         for user in self.__members:
             user.watch_movie(movie)
 
     def add_member(self, user: User):
+        """
+        """
         if isinstance(user, User) and user not in self.__members:
             if self.__owner != user:
                 self.__members.append(user)
 
     def remove_member(self, user: User):
+        """
+        """
         if isinstance(user, User) and user in self.__members:
             if self.__owner != user:
                 self.__members.remove(user)
 
     def is_member(self, user: User):
+        """
+        """
         if isinstance(user, User):
             return user in self.__members
 
 
 class ModelException(Exception):
+    """
+    """
+
+    # noinspection PyUnusedLocal
     def __init__(self, message=None):
         pass
 
 
 def make_review(user, movie, review_text, rating):
-    review = Review(movie,user, review_text, rating)
+    """
+    """
+    review = Review(movie, user, review_text, rating)
     user.add_review(review)
     movie.add_review(review)
     return review
 
+
 def add_to_watchlist(user, movie):
+    """
+    """
     user.watchlist.add_movie(movie)
     return user.watchlist

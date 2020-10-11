@@ -1,7 +1,6 @@
-pytest==6.1.0
+pytest==6.1.1
 python-dotenv==0.14.0
 Flask==1.1.2
 Werkzeug~=1.0.1
-Flask_WTF
 WTForms~=2.3.3
-MarkupSafe~=1.1.1
+fuzzywuzzy~=0.18.0

@@ -10,8 +10,11 @@ browse_blueprint = Blueprint(
 )
 
 
+# noinspection PyShadowingNames
 @browse_blueprint.route('/directors')
 def directors_by_inital():
+    """
+    """
     search_form = utils.MovieSearchForm()
     character = request.args.get('character')
     if character:
@@ -38,8 +41,11 @@ def directors_by_inital():
         )
 
 
+# noinspection PyShadowingNames
 @browse_blueprint.route('/directors/all')
 def directors():
+    """
+    """
     search_form = utils.MovieSearchForm()
     directors = services.get_directors(repo.repo_instance)
     for director in directors:
@@ -52,8 +58,11 @@ def directors():
     )
 
 
+# noinspection PyShadowingNames
 @browse_blueprint.route('/actors', methods=['GET'])
 def actors_by_initial():
+    """
+    """
     search_form = utils.MovieSearchForm()
     character = request.args.get('character')
     if character:
@@ -80,9 +89,12 @@ def actors_by_initial():
         )
 
 
+# noinspection PyShadowingNames
 @browse_blueprint.route('/actors/all')
 @cache.cached(timeout=50)
 def actors():
+    """
+    """
     search_form = utils.MovieSearchForm()
     actors = services.get_actors(repo.repo_instance)
     for actor in actors:
@@ -95,8 +107,11 @@ def actors():
     )
 
 
+# noinspection PyShadowingNames
 @browse_blueprint.route('/genres')
 def genres():
+    """
+    """
     genres = services.get_genres(repo.repo_instance)
     search_form = utils.MovieSearchForm()
     for genre in genres:
@@ -105,12 +120,15 @@ def genres():
         'browse/browse.html',
         title='Genres',
         data=genres,
-        search_form = search_form,
+        search_form=search_form,
     )
 
 
+# noinspection PyShadowingNames
 @browse_blueprint.route('/movies', methods=['GET'])
 def movies_by_first_letter():
+    """
+    """
     character = request.args.get('character')
     search_form = utils.MovieSearchForm()
     if character:
@@ -138,8 +156,11 @@ def movies_by_first_letter():
         )
 
 
+# noinspection PyShadowingNames
 @browse_blueprint.route('/movies/all')
 def movies():
+    """
+    """
     search_form = utils.MovieSearchForm()
     movies = services.get_movies(repo.repo_instance)
     for movie in movies:

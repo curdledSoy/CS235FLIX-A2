@@ -1,6 +1,5 @@
-from cs235flix.adapters.repository import AbstractRepository
-from cs235flix.domain.model import Movie, Genre
 import cs235flix.utilities.utilities as utils
+from cs235flix.adapters.repository import AbstractRepository
 
 
 class UnknownGenreException(Exception):
@@ -8,6 +7,8 @@ class UnknownGenreException(Exception):
 
 
 def get_movies_by_genre(genre: str, repo: AbstractRepository):
+    """
+    """
     genre = repo.get_genre(genre)
     if genre is None:
         raise UnknownGenreException

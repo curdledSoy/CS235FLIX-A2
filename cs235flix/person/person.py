@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, request, session
+from flask import Blueprint, render_template, redirect, url_for, request
 
-import cs235flix.person.services as services
 import cs235flix.adapters.repository as repo
+import cs235flix.person.services as services
 from cs235flix.utilities import utilities as utils
 
 person_blueprint = Blueprint(
@@ -11,6 +11,8 @@ person_blueprint = Blueprint(
 
 @person_blueprint.route('/director/', methods=['GET'])
 def director():
+    """
+    """
     search_form = utils.MovieSearchForm()
     fullname = request.args.get('fullname')
     if fullname is not None:
@@ -24,7 +26,7 @@ def director():
                 fullname=fullname,
                 watchlist=utils.get_user_watchlist(),
                 movies=utils.get_added_movies(movie_data, utils.get_user_watchlist()),
-                search_form = search_form
+                search_form=search_form
             )
         except ValueError:
             return render_template(redirect(url_for('home_bp.home')))
@@ -33,6 +35,8 @@ def director():
 
 @person_blueprint.route('/actor/')
 def actor():
+    """
+    """
     search_form = utils.MovieSearchForm()
     fullname = request.args.get('fullname')
     if fullname:

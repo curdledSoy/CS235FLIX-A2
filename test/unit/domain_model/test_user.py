@@ -5,12 +5,17 @@ from cs235flix.domain.model import Movie, Review, User
 class TestUserMethods:
     @pytest.fixture
     def user(self):
+        """
+        """
         return User("tombrittenden", "123")
 
     @pytest.fixture
     def movie(self):
+        """
+        """
         return Movie("Moana", 2016)
 
+    # noinspection PyTypeChecker,PyTypeChecker
     def test_construction(self):
         user2 = User(1, 2)
         assert user2.user_name is None
@@ -25,6 +30,7 @@ class TestUserMethods:
         assert user.time_spent_watching_movies_minutes == 101
         assert user.watched_movies == [movie]
 
+    # noinspection PyArgumentList
     def test_add_review(self, user, movie):
         review = Review(movie, "good movies", 8)
         user.add_review(review)

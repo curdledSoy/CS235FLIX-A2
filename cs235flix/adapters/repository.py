@@ -1,15 +1,17 @@
 import abc
 from datetime import date
 from typing import List
-from flask_caching import Cache
-from werkzeug.security import generate_password_hash
+
 from cs235flix.domain.model import User, Movie, Director, Genre, UserGroup, Actor, Review, WatchList
 
 repo_instance = None
 
 
-
 class RepositoryException(Exception):
+    """
+    """
+
+    # noinspection PyUnusedLocal
     def __init__(self, message=None):
         pass
 
@@ -18,41 +20,57 @@ class AbstractRepository(abc.ABC):
     @property
     @abc.abstractmethod
     def dataset_of_movies(self):
+        """
+        """
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def dataset_of_actors(self):
+        """
+        """
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def dataset_of_directors(self):
+        """
+        """
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def dataset_of_genres(self):
+        """
+        """
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def dataset_of_users(self):
+        """
+        """
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def dataset_of_groups(self):
+        """
+        """
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def dataset_of_reviews(self):
+        """
+        """
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def dataset_of_watchlists(self):
+        """
+        """
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -172,7 +190,7 @@ class AbstractRepository(abc.ABC):
         """
         if review.movie is None:
             raise RepositoryException("Review cannot be added to Repository: Review not attached to Movie")
-        if review.review_text == None:
+        if review.review_text is None:
             raise RepositoryException("Review cannot be added to Repository: Review Text Empty")
         if review.rating is None:
             raise RepositoryException("Review cannot be added to Repository: Rating is Empty")
@@ -183,7 +201,6 @@ class AbstractRepository(abc.ABC):
         Returns List of all Review Objects stored in the repository
         """
         raise NotImplementedError
-
 
     @abc.abstractmethod
     def add_actor(self, actor: Actor):
@@ -218,6 +235,8 @@ class AbstractRepository(abc.ABC):
 
     @abc.abstractmethod
     def get_watchlists_for_user(self, user: User):
+        """
+        """
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -236,7 +255,6 @@ class AbstractRepository(abc.ABC):
         """
         raise NotImplementedError
 
-
     @abc.abstractmethod
     def add_genre(self, genre: Genre):
         """
@@ -252,3 +270,14 @@ class AbstractRepository(abc.ABC):
         target_genre otherwise return none
         """
         raise NotImplementedError
+
+    def add_movie_to_watchlist(self, user, movie):
+        """
+        """
+        pass
+
+    def remove_movie_from_watchlist(self, user, movie):
+        """
+        """
+        pass
+

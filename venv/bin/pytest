@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/tombrittenden/OneDrive - The University of Auckland/2020/Semester 2/COMPSCI 235/CS235Flix/CS235Flix/venv/bin/python" "$0" "$@"
+'''exec' "/Users/tombrittenden/OneDrive - The University of Auckland/2020/Semester 2/COMPSCI 235/CS235Flix/CS325FLIX-A2/venv/bin/python" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

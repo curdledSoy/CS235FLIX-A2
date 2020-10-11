@@ -61,16 +61,7 @@ ul {
 	margin: 5px;
 	align-self: center;
 }
-.btn-general-disabled {
-	background-color: #006295;
-	border: none;
-	border-radius: 8px;
-	display: inline-block;
-	padding: 10px;
-	margin: 5px;
-	float:left;
-	#opacity: 0.6;
-}
+
 .btn-general:hover {
 	background-color: #006299;
 }
@@ -170,9 +161,6 @@ ul {
 	color: white;
 }
 
-#logo {
-	width: 150px;
-}
 #footer {
 	padding: 20px;
 	background: #000000;
@@ -217,14 +205,6 @@ input[type='submit'] {
 input[type='submit']:hover {
 	background-color: #8acd32;
 	color: black;
-}
-
-.icon {
-	width: 1.5em;
-	height: 1.5em;
-	vertical-align: -0.5em;
-	fill: currentColor;
-	overflow: hidden;
 }
 
 .card {

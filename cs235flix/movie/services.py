@@ -1,9 +1,7 @@
-from datetime import datetime
-
+import cs235flix.utilities.utilities as utils
 from cs235flix.adapters.repository import AbstractRepository
 from cs235flix.authentication.services import UnknownUserException
-from cs235flix.domain.model import Movie, Review, make_review
-import cs235flix.utilities.utilities as utils
+from cs235flix.domain.model import make_review
 
 
 class UnknownMovieException(Exception):
@@ -11,6 +9,8 @@ class UnknownMovieException(Exception):
 
 
 def get_movie(title: str, year: str, repo: AbstractRepository):
+    """
+    """
     movie = repo.get_movie(title, int(year))
     if not movie:
         raise UnknownMovieException
@@ -18,6 +18,8 @@ def get_movie(title: str, year: str, repo: AbstractRepository):
 
 
 def add_review(title: str, year: str, review_text: str, username: str, rating: int, repo: AbstractRepository):
+    """
+    """
     movie = repo.get_movie(title, int(year))
     if movie is None:
         raise UnknownMovieException
@@ -30,9 +32,9 @@ def add_review(title: str, year: str, review_text: str, username: str, rating: i
     repo.add_review(review)
 
 
-
-
-def watch_movie(username:str, title:str, year:str, repo:AbstractRepository):
+def watch_movie(username: str, title: str, year: str, repo: AbstractRepository):
+    """
+    """
     movie = repo.get_movie(title, int(year))
     if movie:
         user = repo.get_user(username)

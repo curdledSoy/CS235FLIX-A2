@@ -1,13 +1,17 @@
-from flask import Blueprint, render_template, redirect, url_for, request, session
+from flask import Blueprint, render_template, redirect, url_for, request
 
-import cs235flix.genre.services as services
 import cs235flix.adapters.repository as repo
+import cs235flix.genre.services as services
 from cs235flix.utilities import utilities as utils
 
 genre_blueprint = Blueprint('genre_bp', __name__, url_prefix='/genres')
 
+
+# noinspection PyUnreachableCode,PyShadowingNames
 @genre_blueprint.route('/', methods=['GET'])
 def genre():
+    """
+    """
     search_form = utils.MovieSearchForm()
     genre = request.args.get('genre')
     if genre:

@@ -1,10 +1,12 @@
 import pytest
-from cs235flix.domain.model import Actor, Director, Genre, Movie
+from cs235flix.domain.model import Actor, Director, Genre, Movie, Review
 
 
 class TestMovieMethods:
     @pytest.fixture
     def movie(self):
+        """
+        """
         mov = Movie("The 100", 2016)
         return mov
 

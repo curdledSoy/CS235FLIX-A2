@@ -5,10 +5,14 @@ from cs235flix.domain.model import Movie, User, UserGroup
 class TestUserGroupMethods:
     @pytest.fixture
     def user(self):
+        """
+        """
         return User("Tom Brittenden", "123")
 
     @pytest.fixture
     def usergroup(self, user):
+        """
+        """
         return UserGroup(user)
 
     def test_construction(self, user, usergroup):
@@ -23,7 +27,7 @@ class TestUserGroupMethods:
         for user in usergroup.members:
             assert user.time_spent_watching_movies_minutes == 20
 
-
+    # noinspection PyTypeChecker
     def test_add_member(self, usergroup, user):
         usergroup.add_member(User("Sophie", "abc"))
         assert usergroup.members == [user, User("Sophie", "abc")]
@@ -31,6 +35,7 @@ class TestUserGroupMethods:
         usergroup.add_member("Hi")
         assert usergroup.members == [user, User("Sophie", "abc")]
 
+    # noinspection PyTypeChecker
     def test_remove_member(self, usergroup, user):
         usergroup.add_member(User("Sophie", "abc"))
         usergroup.add_member(User("Tim", "ab3"))

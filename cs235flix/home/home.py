@@ -1,13 +1,17 @@
-from flask import Blueprint, render_template, url_for, session, redirect, request
+from flask import Blueprint, render_template, url_for
+
+import cs235flix.adapters.repository as repo
 import cs235flix.home.services as services
 import cs235flix.utilities.utilities as utils
-import cs235flix.adapters.repository as repo
+
 home_blueprint = Blueprint(
     'home_bp', __name__)
 
 
 @home_blueprint.route('/', methods=['GET', 'POST'])
 def home():
+    """
+    """
     search_form = utils.MovieSearchForm()
     movies = services.get_top_100movies(repo.repo_instance)
     for movie in movies:

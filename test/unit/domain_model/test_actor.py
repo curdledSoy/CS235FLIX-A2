@@ -5,16 +5,22 @@ from cs235flix.domain.model import Actor
 class TestActorMethods:
     @pytest.fixture
     def actor1(self):
+        """
+        """
         actor = Actor("Lindsay Lohan")
         return actor
 
     @pytest.fixture
     def actor2(self):
+        """
+        """
         actor = Actor("Brad Pitt")
         return actor
 
     @pytest.fixture
     def actor3(self):
+        """
+        """
         actor = Actor("")
         return actor
 

@@ -5,10 +5,12 @@ from cs235flix.domain.model import Movie, WatchList
 class TestWatchlistMethods:
     @pytest.fixture
     def watchlist(self):
+        """
+        """
         return WatchList()
 
     def test_construction(self, watchlist):
-        assert watchlist.first_movie_in_watchlist() == None
+        assert watchlist.first_movie_in_watchlist() is None
         assert watchlist.size() == 0
 
     def test_iter(self, watchlist):
@@ -26,7 +28,7 @@ class TestWatchlistMethods:
         watchlist.add_movie(movie)
         assert watchlist.first_movie_in_watchlist() == movie
 
-    def test_remove_movie(self,watchlist):
+    def test_remove_movie(self, watchlist):
         movie1 = Movie("The 100", 2016)
         movie2 = Movie("Bones", 2004)
         watchlist.add_movie(movie1)
@@ -34,9 +36,10 @@ class TestWatchlistMethods:
         watchlist.remove_movie(movie2)
         assert watchlist.size() == 1
 
+    # noinspection PyTypeChecker
     def test_select_movie_to_watch(self, watchlist):
-        assert watchlist.select_movie_to_watch(1) == None
-        assert watchlist.select_movie_to_watch('a') == None
+        assert watchlist.select_movie_to_watch(1) is None
+        assert watchlist.select_movie_to_watch('a') is None
         movie1 = Movie("The 100", 2016)
         movie2 = Movie("Bones", 2004)
         watchlist.add_movie(movie1)
@@ -49,4 +52,3 @@ class TestWatchlistMethods:
         watchlist.add_movie(movie1)
         watchlist.add_movie(movie2)
         assert watchlist.size() == 2
-

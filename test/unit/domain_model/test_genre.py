@@ -5,6 +5,8 @@ from cs235flix.domain.model import Genre
 class TestGenreMethods:
     @pytest.fixture
     def genre(self):
+        """
+        """
         return Genre("Horror")
 
     def test_genre_name(self, genre):

@@ -7,6 +7,8 @@ from cs235flix.adapters.memory_repository import MemoryRepository, populate
 
 
 def create_app(test_config=None):
+    """
+    """
     app = Flask(__name__)
     app.config.from_object('config.Config')
     data_path = os.path.join('cs235flix', 'adapters', 'data')
@@ -19,8 +21,6 @@ def create_app(test_config=None):
 
     repo.repo_instance = MemoryRepository()
     populate(data_path, repo.repo_instance)
-
-
 
     with app.app_context():
         from .movie import movie
