@@ -75,9 +75,7 @@ class MemoryRepository(AbstractRepository):
             self.__watchlists.append(user.watchlist)
 
     def get_user(self, username) -> User:
-        """
-        """
-        return next((user for user in self.__users if user.user_name == username), None)
+        return next((user for user in self.__users if user.user_name == username.lower()), None)
 
     # noinspection PyUnusedLocal
     def add_movie(self, movie: Movie):
@@ -406,15 +404,6 @@ def load_users(data_path, repo: MemoryRepository):
         repo.add_user(user)
         users[data_row[0]] = user
     return users
-
-
-def save_user(data_path, user: User):
-    """
-    """
-    if user.user_name not in [data_row[0] for data_row in read_csv(os.path.join(data_path, 'Users.csv'))]:
-        with open(os.path.join(data_path, 'Users.csv'), 'a', encoding='utf-8-sig') as user_file:
-            writer = csv.writer(user_file)
-            writer.writerow([user.user_name, user.password])
 
 
 def populate(data_path: str, repo: MemoryRepository):

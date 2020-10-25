@@ -27,6 +27,14 @@ def register():
             return redirect(url_for('authentication_bp.login'))
         except services.NameNotUnqiueException:
             username_unique = "Username is already used, please try another one"
+            return render_template(
+                'authentication/credentials.html',
+                title='Register',
+                auth_form=auth_form,
+                username_error_message=username_unique,
+                handler_url=url_for('authentication_bp.register'),
+                search_form=search_form
+            )
     return render_template(
         'authentication/credentials.html',
         title='Register',

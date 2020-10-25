@@ -11,10 +11,13 @@ class UnknownMovieException(Exception):
 def get_movie(title: str, year: str, repo: AbstractRepository):
     """
     """
-    movie = repo.get_movie(title, int(year))
-    if not movie:
-        raise UnknownMovieException
-    return utils.movie_to_dict(movie)
+    try:
+        movie = repo.get_movie(title, int(year))
+        if not movie:
+            raise UnknownMovieException
+        return utils.movie_to_dict(movie)
+    except:
+        pass
 
 
 def add_review(title: str, year: str, review_text: str, username: str, rating: int, repo: AbstractRepository):

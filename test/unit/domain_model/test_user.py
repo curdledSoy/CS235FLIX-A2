@@ -32,7 +32,7 @@ class TestUserMethods:
 
     # noinspection PyArgumentList
     def test_add_review(self, user, movie):
-        review = Review(movie, "good movies", 8)
+        review = Review(movie, user,"good movies", 8)
         user.add_review(review)
         assert user.reviews == [review]
 

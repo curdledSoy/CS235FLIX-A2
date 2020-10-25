@@ -76,16 +76,18 @@ def review_movie():
     else:
         title = review_form.movie_title.data
         year = review_form.movie_year.data
-
-    movie = services.get_movie(title, year, repo.repo_instance)
-    return render_template(
-        'movie/review_movie.html',
-        movie_title=movie['title'],
-        movie_year=movie['year'],
-        review_form=review_form,
-        search_form=search_form,
-        handler_url=url_for('movie_bp.review_movie')
-    )
+    try:
+        movie = services.get_movie(title, year, repo.repo_instance)
+        return render_template(
+            'movie/review_movie.html',
+            movie_title=movie['title'],
+            movie_year=movie['year'],
+            review_form=review_form,
+            search_form=search_form,
+            handler_url=url_for('movie_bp.review_movie')
+        )
+    except:
+        return redirect(url_for('movie_bp.movie', title=title, year=year))
 
 
 class ReviewForm(FlaskForm):
